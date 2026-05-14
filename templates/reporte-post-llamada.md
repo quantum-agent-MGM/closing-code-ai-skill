@@ -1,3 +1,5 @@
+<!-- Template de referencia visual. El reporte real se genera vía generate_report() en webhook-handler.py con f-strings. Mustache {{}} no se procesa por engine — el código genera el markdown directamente. -->
+
 # 🎙️ Sales Call Analysis Report — Closing Code AI
 
 **Closer**: {{closer_name}}  

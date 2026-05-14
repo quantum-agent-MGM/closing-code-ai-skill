@@ -1,7 +1,7 @@
 ---
 name: closing-code-ai
 description: "Use when analyzing sales calls, preparing closers pre-call, or generating post-call coaching reports. Integrates with Closing Code AI backend for AI-powered sales intelligence."
-version: 1.1.0
+version: 1.2.0
 author: Closing Code AI
 license: proprietary
 copyright: "© 2026 The Closing Code AI. Todos los derechos reservados."
@@ -120,12 +120,13 @@ closing-code-ai/
 │   ├── hermes-skill-standard.md      → Format requirements para Skills Hub
 │   ├── methodology-sources.md        → Referencias a archivos fuente del backend
 │   ├── whop-subscription-webhook.md  → Patrón de webhook para suscripciones
-│   └── brand-abstraction-pattern.md  → Cómo ocultar el nombre del backend
+│   ├── brand-abstraction-pattern.md  → Cómo ocultar el nombre del backend
+│   └── webhook-handler-patterns.md   → Patrones probados: SQLite, HMAC, dual handlers
 ├── templates/
 │   ├── brief-pre-llamada.md          → Template brief pre-call
 │   └── reporte-post-llamada.md       → Template reporte post-call
 └── scripts/
-    └── webhook-handler.py            → Webhook handler + API client
+    └── webhook-handler.py            → Webhook handler + API client + Whop handler
 ```
 
 > 🔒 **La metodología Closing Cuántico™ QC_4.0 NO está en este repositorio.**
@@ -272,11 +273,12 @@ stripe webhook_endpoints create \
 
 ## Changelog
 
+- v1.2.0 (2026-05-14): SQLite + HMAC + Whop handler + bug fixes (score-0-70, typo)
 - v1.1.0 (2026-05-14): Skill completa con tiers, scoring, webhook, distribución
 - v1.0.0 (2026-05-13): Lanzamiento inicial — análisis + reporte
 
 ---
 
-*Closing Code AI — Sales Engine Skill v1.1.0*
+*Closing Code AI — Sales Engine Skill v1.2.0*
 *Powered by Closing Code AI backend + Hermes Agent*
 *https://closingcodeai.online*

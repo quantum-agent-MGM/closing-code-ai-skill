@@ -50,6 +50,7 @@ def _init_db():
         CREATE TABLE IF NOT EXISTS customers (
             user_id TEXT PRIMARY KEY,
             email TEXT,
+            telegram_id TEXT,
             api_key TEXT UNIQUE,
             plan_id TEXT,
             tier TEXT,
@@ -423,16 +424,19 @@ def verify_whop_signature(body: bytes, signature: str, secret: str) -> bool:
     return hmac.compare_digest(f"sha256={expected}", signature)
 
 
-def save_customer(user_id: str, email: str, plan_id: str, api_key: str) -> None:
+def save_customer(
+    user_id: str, email: str, plan_id: str, api_key: str, telegram_id: str = ""
+) -> None:
     """Save or update customer in SQLite."""
     tier = TIER_MAP.get(plan_id, "unknown")
     conn = _db()
     conn.execute(
         """
-        INSERT INTO customers (user_id, email, api_key, plan_id, tier, activated_at, active)
-        VALUES (?, ?, ?, ?, ?, ?, 1)
+        INSERT INTO customers (user_id, email, telegram_id, api_key, plan_id, tier, activated_at, active)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1)
         ON CONFLICT(user_id) DO UPDATE SET
             email = excluded.email,
+            telegram_id = excluded.telegram_id,
             api_key = excluded.api_key,
             plan_id = excluded.plan_id,
             tier = excluded.tier,
@@ -443,6 +447,7 @@ def save_customer(user_id: str, email: str, plan_id: str, api_key: str) -> None:
         (
             user_id,
             email,
+            telegram_id,
             api_key,
             plan_id,
             tier,
@@ -464,26 +469,55 @@ def revoke_customer_key(user_id: str) -> None:
     conn.close()
 
 
-def notify_user_activation(user_id: str, api_key: str, plan_id: str):
-    """Notify user of activation via Telegram."""
+def notify_user_activation(
+    user_id: str, api_key: str, plan_id: str, telegram_id: str = ""
+):
+    """Notify user of activation via Telegram.
+
+    If telegram_id is provided, sends directly to the customer.
+    Otherwise sends to admin chat with forwarding instruction.
+    """
+    import requests
+
     tier = TIER_MAP.get(plan_id, "unknown")
     msg = (
-        f"🎉 *¡Bienvenido a Closing Code AI!*\n\n"
+        f"\ud83c\udf89 *\u00a1Bienvenido a Closing Code AI!*\n\n"
         f"Tu tier: *{tier}*\n"
         f"API key: `{api_key[:16]}...`\n\n"
         f"Configura tu agente:\n"
         f"```\nexport CLOSING_CODE_AI_API_KEY={api_key}\n"
         f"hermes closing-code-ai activate --tier {tier}\n```"
     )
-    if TELEGRAM_BOT and TELEGRAM_CHAT:
-        import requests
 
+    target_chat = telegram_id if telegram_id else TELEGRAM_CHAT
+
+    if TELEGRAM_BOT and target_chat:
         requests.post(
             f"https://api.telegram.org/bot{TELEGRAM_BOT}/sendMessage",
-            json={"chat_id": TELEGRAM_CHAT, "text": msg, "parse_mode": "Markdown"},
+            json={"chat_id": target_chat, "text": msg, "parse_mode": "Markdown"},
             timeout=30,
         )
-    print(f"[📢] Activation notification sent for {user_id}")
+
+    if not telegram_id and TELEGRAM_BOT and TELEGRAM_CHAT:
+        admin_msg = (
+            f"\ud83d\udce2 *Nuevo cliente activado*\n\n"
+            f"User ID: `{user_id}`\n"
+            f"Tier: *{tier}*\n"
+            f"API key: `{api_key}`\n\n"
+            f"\u26a0\ufe0f *Este cliente no tiene telegram_id.* "
+            f"Reenv\u00eda la API key manualmente o pide su Telegram ID."
+        )
+        requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_BOT}/sendMessage",
+            json={
+                "chat_id": TELEGRAM_CHAT,
+                "text": admin_msg,
+                "parse_mode": "Markdown",
+            },
+            timeout=30,
+        )
+
+    print(f"[\ud83d\udce2] Activation notification sent for {user_id}")
 
 
 def handle_whop_webhook(body: bytes, headers: dict) -> dict:
@@ -503,6 +537,7 @@ def handle_whop_webhook(body: bytes, headers: dict) -> dict:
     user = membership.get("user", {})
     user_email = user.get("email", "")
     user_id = membership.get("user_id", "")
+    telegram_id = user.get("telegram_id", "")
 
     tier = TIER_MAP.get(plan_id)
     if not tier:
@@ -510,8 +545,8 @@ def handle_whop_webhook(body: bytes, headers: dict) -> dict:
 
     if event_type in ("membership.created", "membership.activated"):
         api_key = f"ccai_{secrets.token_urlsafe(24)}"
-        save_customer(user_id, user_email, plan_id, api_key)
-        notify_user_activation(user_id, api_key, plan_id)
+        save_customer(user_id, user_email, plan_id, api_key, telegram_id)
+        notify_user_activation(user_id, api_key, plan_id, telegram_id)
         return {"status": "activated", "tier": tier}
 
     if event_type == "membership.deactivated":
