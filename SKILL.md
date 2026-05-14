@@ -1,10 +1,10 @@
 ---
 name: closing-code-ai
 description: "Use when analyzing sales calls, preparing closers pre-call, or generating post-call coaching reports. Integrates with Closing Code AI backend for AI-powered sales intelligence."
-version: 1.2.0
+version: 1.2.2
 author: Closing Code AI
 license: proprietary
-copyright: "© 2026 The Closing Code AI. Todos los derechos reservados."
+copyright: "© 2026 The Closing Code AI. All rights reserved."
 redistribution: false
 terms_url: https://closingcodeai.com/terms
 methodology: "Closing Cuántico™ QC_4.0"
@@ -17,15 +17,15 @@ metadata:
 
 # Closing Code AI — Sales Engine Skill for Hermes Agent
 
-> ⚠️ **ADVERTENCIA LEGAL:** Esta skill implementa la metodología propietaria Closing Cuántico™ QC_4.0.
-> Uso comercial sin licencia activa prohibido. © 2026 The Closing Code AI. Todos los derechos reservados.
-> Ver términos: https://closingcodeai.com/terms
+> ⚠️ **LEGAL WARNING:** This skill implements the proprietary Closing Cuántico™ QC_4.0 methodology.
+> Commercial use without an active license is prohibited. © 2026 The Closing Code AI. All rights reserved.
+> Terms: https://closingcodeai.com/terms
 
 ## Overview
 
-Closing Code AI es la skill premium de ventas para Hermes Agent. Conecta tu agente Hermes con el backend de Closing Code AI para analizar llamadas de ventas, generar briefs pre-llamada, y entregar reportes post-llamada con score 0-70 basado en la metodología propietaria Closing Cuántico™ QC_4.0.
+Closing Code AI is the premium sales skill for Hermes Agent. Connects your Hermes agent with the Closing Code AI backend to analyze sales calls, generate pre-call briefs, and deliver post-call reports with a 0-70 score based on the proprietary Closing Cuántico™ QC_4.0 methodology.
 
-**Stack:** Closing Code AI API (transcripción + análisis) + Hermes Agent (delivery + coaching)
+**Stack:** Closing Code AI API (transcription + analysis) + Hermes Agent (delivery + coaching)
 
 ## When to Use (Triggers)
 
@@ -41,133 +41,134 @@ Closing Code AI es la skill premium de ventas para Hermes Agent. Conecta tu agen
 - "what archetype is this prospect" / "qué arquetipo es este prospecto"
 - Post-call automatic via Closing Code AI webhook
 
-## No usar para:
-- Llamadas que no son de ventas (soporte técnico, RH, etc.)
-- Análisis sin audio/transcripción disponible
-- Coaching en idiomas no soportados (español e inglés soportados)
+## Do Not Use For:
+- Calls that are not sales (technical support, HR, etc.)
+- Analysis without available audio/transcription
+- Coaching in unsupported languages (English and Spanish supported)
 
 ---
 
-## Tiers de Producto
+## Product Tiers
 
-### Tier 1: Signal Lite (Gratuito)
-Brief pre-llamada básico vía Telegram/WhatsApp.
-- Buyer profiling (datos públicos del prospect)
-- 3 pains probables del prospect
-- Preguntas de apertura recomendadas
-- Agenda sugerida de 30 minutos
+### Tier 1: Signal Lite (Free)
+Basic pre-call brief via Telegram/WhatsApp.
+- Buyer profiling (public data on the prospect)
+- 3 probable pains of the prospect
+- Recommended opening questions
+- Suggested 30-minute agenda
 
-### Tier 2: Closer Engine ($197/mes)
-Análisis post-llamada completo contra Closing Cuántico™ QC_4_0.
-- Transcripción con timestamps (Closing Code AI Whisper)
-- Score 0-70 con 6 dimensiones cuánticas (A-F) + Dimensión G
-- Perfilado tridimensional: Fricción + Decisión + Monetario
-- Los 12 Pecados Capitales con timestamps exactos
-- Agujeros Negros detectados/confrontados
-- Sistema de cierre recomendado (1 de 10)
-- Colapso de Realidad sugerido para el perfil
-- Brief de follow-up automático (email/WhatsApp listo)
-- Comparativa vs historial de llamadas
+### Tier 2: Closer Engine ($197/mo)
+Full post-call analysis against Closing Cuántico™ QC_4_0.
+- Transcription with timestamps (Closing Code AI Whisper)
+- Score 0-70 with 6 quantum dimensions (A-F) + Dimension G
+- Three-dimensional profiling: Friction + Decision + Monetary
+- The 12 Deadly Sins with exact timestamps
+- Black Holes detected/confronted
+- Recommended closing system (1 of 10)
+- Suggested Reality Collapse for the profile
+- Auto follow-up brief (email/WhatsApp ready)
+- Comparison vs call history
 
-### Tier 3: Closing Code Pro ($497/mes)
-Closer Engine × múltiples closers + inteligencia avanzada.
-- Todo lo de Closer Engine
-- Multi-closer: tracking individual por vendedor
-- Reporte semanal de patrones del equipo
-- Buyer profiling avanzado vía Closing Code AI API
-- Deal prediction ML integrado
+### Tier 3: Closing Code Pro ($497/mo)
+Closer Engine × multiple closers + advanced intelligence.
+- Everything in Closer Engine
+- Multi-closer: individual tracking per seller
+- Weekly team pattern report
+- Advanced buyer profiling via Closing Code AI API
+- Integrated ML deal prediction
 - Intent signals
 - CRM sync: GHL, HubSpot, Salesforce, Twenty
 
 ---
 
-## Flujo de Trabajo
+## Workflow
 
-### Pre-llamada (Signal Lite)
+### Pre-call (Signal Lite)
 
-1. Usuario dice: *"prepara brief para mi llamada con [Nombre] de [Empresa]"*
-2. Hermes detecta intención → activa skill
-3. Skill busca datos públicos del prospect (LinkedIn, web, CRM si conectado)
-4. Genera brief pre-llamada con template `brief-pre-llamada.md`
-5. Envía por Telegram/WhatsApp al closer
+1. User says: *"prepare brief for my call with [Name] from [Company]"*
+2. Hermes detects intent → activates skill
+3. Skill searches public data on the prospect (LinkedIn, web, CRM if connected)
+4. Generates pre-call brief with `brief-pre-llamada.md` template
+5. Sends via Telegram/WhatsApp to the closer
 
-### Post-llamada (Closer Engine / Pro)
+### Post-call (Closer Engine / Pro)
 
-1. Llamada termina → Closing Code AI ingiere audio vía `POST /v1/calls/ingest`
-2. Closing Code AI transcribe (faster-whisper-server :8100)
-3. Closing Code AI analiza con CQ_3_3 methodology (analyzer :8002)
-4. Webhook dispara → skill recibe payload
-5. Skill genera reporte estructurado con template `reporte-post-llamada.md`
-6. Envía por Telegram/WhatsApp al closer + manager
+1. Call ends → Closing Code AI ingests audio via `POST /v1/calls/ingest`
+2. Closing Code AI transcribes (faster-whisper-server :8100)
+3. Closing Code AI analyzes with CQ_3_3 methodology (analyzer :8002)
+4. Webhook triggers → skill receives payload
+5. Skill generates structured report with `reporte-post-llamada.md` template
+6. Sends via Telegram/WhatsApp to closer + manager
 
-### Comando manual
+### Manual Command
 
 ```bash
-# Analizar llamada manualmente
+# Analyze call manually
 hermes closing-code-ai analyze <audio_url_or_file>
 
-# Generar brief pre-llamada
+# Generate pre-call brief
 hermes closing-code-ai brief <prospect_name> <company>
 
-# Ver historial
+# View history
 hermes closing-code-ai history
 ```
 
 ---
 
-## Estructura de Archivos
+## File Structure
 
 ```
 closing-code-ai/
-├── SKILL.md                          → Este archivo (interfaz pública)
-├── skill.yaml                        → Manifest con tiers y pricing
-├── README.md                         → Instalación pública
-├── .gitignore                        → Excluye private/ y references/
+├── SKILL.md                          → This file (public interface)
+├── skill.yaml                        → Manifest with tiers and pricing
+├── README.md                         → Public installation guide
+├── .gitignore                        → Excludes private/ and references/
 ├── references/
-│   ├── hermes-skill-standard.md      → Format requirements para Skills Hub
-│   ├── methodology-sources.md        → Referencias a archivos fuente del backend
-│   ├── whop-subscription-webhook.md  → Patrón de webhook para suscripciones
-│   ├── brand-abstraction-pattern.md  → Cómo ocultar el nombre del backend
-│   └── webhook-handler-patterns.md   → Patrones probados: SQLite, HMAC, dual handlers
+│   ├── hermes-skill-standard.md      → Format requirements for Skills Hub
+│   ├── methodology-sources.md        → References to backend source files
+│   ├── whop-subscription-webhook.md  → Webhook pattern for subscriptions
+│   ├── brand-abstraction-pattern.md  → How to hide backend name
+│   └── webhook-handler-patterns.md   → Proven patterns: SQLite, HMAC, dual handlers
 ├── templates/
-│   ├── brief-pre-llamada.md          → Template brief pre-call
-│   └── reporte-post-llamada.md       → Template reporte post-call
+│   ├── brief-pre-llamada.md          → Pre-call brief template
+│   └── reporte-post-llamada.md       → Post-call report template
 └── scripts/
     └── webhook-handler.py            → Webhook handler + API client + Whop handler
 ```
 
-> 🔒 **La metodología Closing Cuántico™ QC_4.0 NO está en este repositorio.**
-> La skill pública es solo la interfaz. La metodología completa (dimensiones A-G,
-> 12 Pecados, 10 Sistemas de Cierre, 4 Arquetipos, 5 Colapsos) vive en el
-> backend privado de Closing Code AI y se accede vía API con CLOSING_CODE_AI_API_KEY.
-> Sin API key válida y tier activo, la skill no puede generar análisis.
+> 🔒 **The Closing Cuántico™ QC_4.0 methodology is NOT in this repository.**
+> The public skill is only the interface. The complete methodology (dimensions A-G,
+> 12 Deadly Sins, 10 Closing Systems, 4 Archetypes, 5 Collapses) lives in the
+> private Closing Code AI backend and is accessed via API with CLOSING_CODE_AI_API_KEY.
+> Without a valid API key and active tier, the skill cannot generate analysis.
+
 ---
 
-## Integración con Closing Code AI
+## Integration with Closing Code AI
 
-### Endpoints Utilizados
+### Endpoints Used
 
-| Endpoint | Método | Uso | Tier |
+| Endpoint | Method | Use | Tier |
 |----------|--------|-----|------|
-| `/health` | GET | Health check | Todos |
-| `/v1/calls/ingest` | POST | Ingestar audio de llamada | Closer+ |
-| `/v1/clients/{id}/analysis/latest` | GET | Último análisis | Closer+ |
-| `/v1/live-coach/suggestions` | POST | Suggestions live coach | Pro |
-| `/v1/deals/predict` | POST | Deal prediction ML | Pro |
+| `/health` | GET | Health check | All |
+| `/v1/calls/ingest` | POST | Ingest call audio | Closer+ |
+| `/v1/clients/{id}/analysis/latest` | GET | Latest analysis | Closer+ |
+| `/v1/live-coach/suggestions` | POST | Live coach suggestions | Pro |
+| `/v1/deals/predict` | POST | ML deal prediction | Pro |
 | `/v1/intent-signals/score` | POST | Intent scoring | Pro |
 | `/v1/buyer-profiling/profile` | POST | Buyer profiling | Pro |
-| `/v1/calls/{id}/analysis` | GET | Análisis QC_4_0 completo con scores A-G | Closer+ |
+| `/v1/calls/{id}/analysis` | GET | Full QC_4_0 analysis with A-G scores | Closer+ |
 
-### Autenticación
+### Authentication
 
-La skill requiere `CLOSING_CODE_AI_API_KEY` en el environment. El usuario obtiene su API key desde el portal de Closing Code AI (`https://app.closingcodeai.online/settings`).
+The skill requires `CLOSING_CODE_AI_API_KEY` in the environment. The user gets their API key from the Closing Code AI portal (`https://app.closingcodeai.online/settings`).
 
 ### Webhook
 
-Closing Code AI envía webhooks a la URL configurada cuando un análisis termina. La skill expone un servidor webhook local en `http://localhost:9876/webhook/closing-code-ai` (configurable).
+Closing Code AI sends webhooks to the configured URL when an analysis finishes. The skill exposes a local webhook server at `http://localhost:9876/webhook/closing-code-ai` (configurable).
 
 ```bash
-# Configurar webhook en Closing Code AI
+# Configure webhook in Closing Code AI
 curl -X POST https://api.closingcodeai.online/v1/webhooks \
   -H "X-API-Key: $CLOSING_CODE_AI_API_KEY" \
   -d '{"url": "http://localhost:9876/webhook/closing-code-ai", "events": ["call.analysis.completed"]}'
@@ -175,117 +176,118 @@ curl -X POST https://api.closingcodeai.online/v1/webhooks \
 
 ---
 
-## Reglas de la Skill
+## Skill Rules
 
-1. **Directo y accionable** — sin fluff. Usar lenguaje de closer.
-2. **Honesto pero constructivo** — si la llamada fue mala, decirlo con solución concreta.
-3. **Confidencial** — nunca compartir transcripciones ni datos del prospect fuera del usuario.
-4. **Rápido** — brief pre-llamada <30s, reporte post-llamada <5 min tras recepción de webhook.
+1. **Direct and actionable** — no fluff. Use closer language.
+2. **Honest but constructive** — if the call was bad, say it with a concrete solution.
+3. **Confidential** — never share transcripts or prospect data outside the user.
+4. **Fast** — pre-call brief <30s, post-call report <5 min after webhook receipt.
 5. **English & Spanish** — responds in the user's language.
 
 ---
 
 ## Prompt Triggers (Auto-activation)
 
-La skill se activa automáticamente cuando el usuario dice:
+The skill activates automatically when the user says:
 
-- "analiza esta llamada", "revisa mi llamada", "feedback de la call"
-- "prepara al closer", "brief para", "brief pre-llamada"
-- "genera reporte", "score de la llamada", "qué tal cerré"
-- "cuál es mi score cuántico", "qué pecados cometí"
-- "qué arquetipo era este prospecto", "cómo manejar objeciones"
-- "diagnóstico de la llamada", "reporte QC_4_0"
-- "cómo mejorar mi closing", "coaching de ventas"
+- "analyze this call", "review my call", "feedback on the call"
+- "prepare the closer", "brief for", "pre-call brief"
+- "generate report", "call score", "how did I close"
+- "what's my quantum score", "what sins did I commit"
+- "what archetype was this prospect", "how to handle objections"
+- "call diagnosis", "QC_4_0 report"
+- "how to improve my closing", "sales coaching"
 
 ---
 
 ## Common Pitfalls
 
-1. **Sin CLOSING_CODE_AI_API_KEY**: La skill falla silenciosamente. Siempre verificar que la key está configurada.
-2. **Audio muy largo (>2h)**: Whisper puede truncar. Recomendar segmentación para calls >90 min.
-3. **Webhook no configurado**: El post-call automático no funciona. El usuario debe ejecutar análisis manualmente.
-4. **Tier incorrecto**: Si el usuario tiene Signal Lite gratis pero pide análisis post-llamada, sugerir upgrade a Closer Engine.
-5. **Prospect sin datos públicos**: El brief pre-llamada será genérico. Usar preguntas abiertas como fallback.
-6. **Exponer nombre del backend en la skill**: NUNCA usar el nombre real del backend (QuantumCore) en archivos públicos. Usar siempre la marca visible (Closing Code AI). Ver `references/brand-abstraction-pattern.md`.
+1. **No CLOSING_CODE_AI_API_KEY**: The skill fails silently. Always verify the key is configured.
+2. **Audio too long (>2h)**: Whisper may truncate. Recommend segmentation for calls >90 min.
+3. **Webhook not configured**: Automatic post-call doesn't work. User must run manual analysis.
+4. **Wrong tier**: If the user has free Signal Lite but asks for post-call analysis, suggest upgrade to Closer Engine.
+5. **Prospect with no public data**: The pre-call brief will be generic. Use open questions as fallback.
+6. **Exposing backend name in the skill**: NEVER use the real backend name (QuantumCore) in public files. Always use the visible brand (Closing Code AI). See `references/brand-abstraction-pattern.md`.
 
 ---
 
 ## Verification Checklist
 
-- [ ] CLOSING_CODE_AI_API_KEY configurado
-- [ ] CLOSING_CODE_AI_BASE_URL apunta al backend correcto
-- [ ] Webhook configurado en Closing Code AI portal
-- [ ] Telegram/WhatsApp gateway de Hermes activo
-- [ ] Tier del usuario verificado (Signal/Closer/Pro)
-- [ ] Reporte generado con score 0-70 (dimensiones A-G) + grade
-- [ ] Brief de follow-up incluye próximo paso concreto + sistema de cierre sugerido
-- [ ] Transcripción no compartida fuera del usuario
+- [ ] CLOSING_CODE_AI_API_KEY configured
+- [ ] CLOSING_CODE_AI_BASE_URL points to correct backend
+- [ ] Webhook configured in Closing Code AI portal
+- [ ] Telegram/WhatsApp gateway of Hermes active
+- [ ] User tier verified (Signal/Closer/Pro)
+- [ ] Report generated with score 0-70 (dimensions A-G) + grade
+- [ ] Follow-up brief includes concrete next step + suggested closing system
+- [ ] Transcription not shared outside the user
 
 ---
 
-## Instalación
+## Installation
 
 ```bash
-# Instalar vía tap privado (método recomendado)
+# Install via private tap (recommended method)
 hermes skills tap add quantum-agent-MGM/closing-code-ai-skill
 
-# O instalar manualmente
+# Or install manually
 git clone https://github.com/quantum-agent-MGM/closing-code-ai-skill.git \
   ~/.hermes/skills/devops/closing-code-ai
 ```
 
-## Activación de Tier
+## Tier Activation
 
 ```bash
-# Signal Lite (gratis) — brief pre-llamada
+# Signal Lite (free) — pre-call brief
 hermes closing-code-ai activate --tier signal-lite
 
-# Closer Engine ($197/mes) — análisis post-llamada
+# Closer Engine ($197/mo) — post-call analysis
 hermes closing-code-ai activate --tier closer-engine --key $CLOSING_CODE_AI_API_KEY
 
-# Closing Code Pro ($497/mes) — todo + multi-closer + ML
+# Closing Code Pro ($497/mo) — everything + multi-closer + ML
 hermes closing-code-ai activate --tier closing-code-pro --key $CLOSING_CODE_AI_API_KEY
 ```
 
-> ⚡ **Análisis completo requiere Closer Engine ($197/mes)**
-> → Activa en: [whop.com/checkout/plan_rY3E9SKYb61XI](https://whop.com/checkout/plan_rY3E9SKYb61XI/)
-> → Recibirás tu API key por Telegram en menos de 2 minutos.
+> ⚡ **Full analysis requires Closer Engine ($197/mo)**
+> → Activate at: [whop.com/checkout/plan_rY3E9SKYb61XI](https://whop.com/checkout/plan_rY3E9SKYb61XI/)
+> → You will receive your API key via Telegram in less than 2 minutes.
 
-## Distribución y Monetización
+## Distribution and Monetization
 
-### Canales de Distribución
+### Distribution Channels
 
 1. **Hermes Skills Hub** — `hermes skills tap add quantum-agent-MGM/closing-code-ai-skill`
 2. **ClawHub** (`clawhub.ai`)
 3. **aiskill.market**
 4. **r/hermesagent** — early adopters
-5. **Comunidades de closers LatAm**
+5. **High-ticket closer communities worldwide**
 
-### Loop de Monetización
+### Monetization Loop
 
 ```
-Cliente instala tap gratuito → Usa Signal Lite 2-3 semanas →
-Hermes sugiere upgrade → Compra $197/mes → Skill desbloquea Closing Code AI →
-Hermes ejecuta análisis autónomo → Closer recibe reporte por WhatsApp
+Customer installs free tap → Uses Signal Lite for 2-3 weeks →
+Hermes suggests upgrade → Purchases $197/mo → Skill unlocks Closing Code AI →
+Hermes runs autonomous analysis → Closer receives report via WhatsApp
 ```
 
-### Stripe Webhook para Activación
+### Whop Webhook for Activation
 
 ```bash
-# Configurar webhook de Stripe para desbloquear tier
-stripe webhook_endpoints create \
-  --url https://api.closingcodeai.online/v1/skills/activate \
-  --events checkout.session.completed
+# Configure Whop webhook to unlock tier
+# Webhook URL: https://api.closingcodeai.online/v1/webhooks/whop
+# Events: membership.activated, membership.deactivated
 ```
 
 ## Changelog
 
-- v1.2.0 (2026-05-14): SQLite + HMAC + Whop handler + bug fixes (score-0-70, typo)
-- v1.1.0 (2026-05-14): Skill completa con tiers, scoring, webhook, distribución
-- v1.0.0 (2026-05-13): Lanzamiento inicial — análisis + reporte
+- v1.2.2 (2026-05-14): Global repositioning — English + Spanish, languages field in skill.yaml, bilingual triggers
+- v1.2.1 (2026-05-14): telegram_id in customers table, notify_user_activation sends to client if telegram_id present
+- v1.2.0 (2026-05-14): SQLite + HMAC + Whop handler + bug fixes (score-0-70, typo, Mustache comment)
+- v1.1.0 (2026-05-14): Complete skill with tiers, scoring, webhook, distribution
+- v1.0.0 (2026-05-13): Initial launch — analysis + report
 
 ---
 
-*Closing Code AI — Sales Engine Skill v1.2.0*
+*Closing Code AI — Sales Engine Skill v1.2.2*
 *Powered by Closing Code AI backend + Hermes Agent*
 *https://closingcodeai.online*
