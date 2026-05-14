@@ -21,11 +21,11 @@ Analiza tus llamadas de ventas automáticamente y te dice **exactamente** qué h
 
 ## 3 Tiers
 
-| Tier | Precio | Qué incluye |
-|------|--------|-------------|
-| **Signal Lite** | **Gratis** | Brief pre-llamada con buyer profiling |
-| **Closer Engine** | **$197/mes** | Análisis post-llamada completo + score + follow-up |
-| **Closing Code Pro** | **$497/mes** | Multi-closer + ML + CRM sync + reportes semanales |
+| Tier | Precio | Qué incluye | Checkout |
+|------|--------|-------------|----------|
+| **Signal Lite** | **Gratis** | Brief pre-llamada con buyer profiling | [whop.com/checkout/plan_tKa03eOMu8tno](https://whop.com/checkout/plan_tKa03eOMu8tno/) |
+| **Closer Engine** | **$197/mes** | Análisis post-llamada completo + score + follow-up | [whop.com/checkout/plan_rY3E9SKYb61XI](https://whop.com/checkout/plan_rY3E9SKYb61XI/) |
+| **Closing Code Pro** | **$497/mes** | Multi-closer + ML + CRM sync + reportes semanales | [whop.com/checkout/plan_I8OXKp52wzdpV](https://whop.com/checkout/plan_I8OXKp52wzdpV/) |
 
 ## Instalación
 

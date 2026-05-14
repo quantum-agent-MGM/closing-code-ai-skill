@@ -226,13 +226,17 @@ git clone https://github.com/quantum-agent-MGM/closing-code-ai-skill.git \
 ```bash
 # Signal Lite (gratis) — brief pre-llamada
 hermes closing-code-ai activate --tier signal-lite
-```bash
+
 # Closer Engine ($197/mes) — análisis post-llamada
 hermes closing-code-ai activate --tier closer-engine --key $CLOSING_CODE_AI_API_KEY
 
 # Closing Code Pro ($497/mes) — todo + multi-closer + ML
 hermes closing-code-ai activate --tier closing-code-pro --key $CLOSING_CODE_AI_API_KEY
 ```
+
+> ⚡ **Análisis completo requiere Closer Engine ($197/mes)**
+> → Activa en: [whop.com/checkout/plan_rY3E9SKYb61XI](https://whop.com/checkout/plan_rY3E9SKYb61XI/)
+> → Recibirás tu API key por Telegram en menos de 2 minutos.
 
 ## Distribución y Monetización
 
