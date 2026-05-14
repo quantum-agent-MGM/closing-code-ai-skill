@@ -27,12 +27,19 @@ Closing Code AI es la skill premium de ventas para Hermes Agent. Conecta tu agen
 
 **Stack:** Closing Code AI API (transcripción + análisis) + Hermes Agent (delivery + coaching)
 
-## When to Use
+## When to Use (Triggers)
 
-- El usuario dice *"analiza esta llamada"*, *"revisa mi llamada"*, *"dame feedback de la call"*
-- El usuario dice *"prepara al closer"*, *"genera brief pre-llamada"*, *"brief para el closer"*
-- El usuario dice *"genera reporte post-llamada"*, *"score de la llamada"*, *"qué tal cerré"*
-- Post-call automático vía webhook de Closing Code AI
+- "analyze this call" / "analiza esta llamada"
+- "review my call" / "revisa mi llamada"
+- "give me feedback on this recording" / "dame feedback de la call"
+- "prepare the closer" / "prepara al closer"
+- "generate pre-call brief" / "genera brief pre-llamada"
+- "brief for the closer" / "brief para el closer"
+- "generate post-call report" / "genera reporte post-llamada"
+- "score this recording" / "califica esta grabación"
+- "how did I close" / "qué tal cerré"
+- "what archetype is this prospect" / "qué arquetipo es este prospecto"
+- Post-call automatic via Closing Code AI webhook
 
 ## No usar para:
 - Llamadas que no son de ventas (soporte técnico, RH, etc.)
@@ -174,7 +181,7 @@ curl -X POST https://api.closingcodeai.online/v1/webhooks \
 2. **Honesto pero constructivo** — si la llamada fue mala, decirlo con solución concreta.
 3. **Confidencial** — nunca compartir transcripciones ni datos del prospect fuera del usuario.
 4. **Rápido** — brief pre-llamada <30s, reporte post-llamada <5 min tras recepción de webhook.
-5. **En español por defecto** — inglés si el usuario lo solicita explícitamente.
+5. **English & Spanish** — responds in the user's language.
 
 ---
 
