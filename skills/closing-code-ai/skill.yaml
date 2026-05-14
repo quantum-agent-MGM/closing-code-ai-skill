@@ -1,0 +1,156 @@
+name: closing-code-ai
+display_name: "Closing Code AI — Sales Engine"
+description: "Analiza llamadas de ventas con AI. Pre-call briefs + post-call scoring 0-70 con metodología propietaria Closing Cuántico™. Integración nativa con Closing Code AI backend."
+version: 1.1.0
+author: "The Closing Code AI"
+license: proprietary
+copyright: "© 2026 The Closing Code AI. Todos los derechos reservados."
+terms_url: https://closingcodeai.com/terms
+redistribution: false
+homepage: https://closingcodeai.online
+repository: https://github.com/quantum-agent-MGM/closing-code-ai-skill
+
+platforms:
+  - linux
+  - macos
+  - windows
+
+requires:
+  hermes: ">=0.13.0"
+  python: ">=3.11"
+
+environment:
+  required:
+    - HERMES_GATEWAY_URL
+    - TELEGRAM_BOT_TOKEN
+  optional:
+    - CLOSING_CODE_AI_API_KEY
+    - CLOSING_CODE_AI_BASE_URL
+    - WHATSAPP_WEBHOOK_URL
+
+tiers:
+  signal-lite:
+    name: "Signal Lite"
+    price: 0
+    price_currency: USD
+    billing: free
+    description: "Brief pre-llamada básico vía Telegram/WhatsApp"
+    features:
+      - buyer-profiling-basic
+      - pre-call-brief
+      - telegram-delivery
+    limits:
+      calls_per_month: 20
+      closers: 1
+
+  closer-engine:
+    name: "Closer Engine"
+    price: 197
+    price_currency: USD
+    billing: monthly
+    description: "Análisis post-llamada completo contra Closing Cuántico™"
+    features:
+      - buyer-profiling-basic
+      - pre-call-brief
+      - post-call-analysis
+      - transcription-whisper
+      - score-0-100
+      - error-timestamps
+      - improvement-suggestions
+      - followup-brief-auto
+      - history-comparison
+      - telegram-delivery
+      - whatsapp-delivery
+    limits:
+      calls_per_month: 100
+      closers: 1
+    requires_upgrade_from: signal-lite
+
+  closing-code-pro:
+    name: "Closing Code Pro"
+    price: 497
+    price_currency: USD
+    billing: monthly
+    description: "Multi-closer + reporte semanal + buyer profiling avanzado + deal prediction ML"
+    features:
+      - buyer-profiling-advanced
+      - pre-call-brief
+      - post-call-analysis
+      - transcription-whisper
+      - score-0-100
+      - error-timestamps
+      - improvement-suggestions
+      - followup-brief-auto
+      - history-comparison
+      - multi-closer-tracking
+      - weekly-team-report
+      - deal-prediction-ml
+      - intent-signals
+      - crm-sync
+      - telegram-delivery
+      - whatsapp-delivery
+      - api-access
+    limits:
+      calls_per_month: unlimited
+      closers: unlimited
+    requires_upgrade_from: closer-engine
+
+categories:
+  - sales
+  - coaching
+  - analytics
+  - productivity
+
+tags:
+  - sales
+  - closing
+  - call-analysis
+  - coaching
+  - closing-code-ai
+  - whisper
+  - post-call
+  - pre-call
+  - deal-prediction
+  - buyer-profiling
+
+related_skills:
+  - hermes-sales-engine
+  - methodology-alignment
+
+entry_points:
+  cli:
+    - command: closing-code-ai
+      description: "Main command for Closing Code AI skill"
+      subcommands:
+        - analyze
+        - brief
+        - history
+        - activate
+        - config
+  webhook:
+    - path: /webhook/closing-code-ai
+      method: POST
+      description: "Receive Closing Code AI call analysis completions"
+
+dependencies:
+  python_packages:
+    - requests
+    - pyyaml
+  external_services:
+    - name: closing-code-ai-api
+      description: "Closing Code AI backend API — incluye metodología privada"
+      required_for_tiers: [closer-engine, closing-code-pro]
+      endpoints:
+        - /v1/calls/ingest
+        - /v1/calls/{id}/analysis
+        - /v1/methodology/closing-cuantico  → Privado, requiere API key
+        - /v1/methodology/scoring-rubric    → Privado, requiere API key
+    - name: openai-whisper
+      description: "Whisper API o local faster-whisper"
+      required_for_tiers: [closer-engine, closing-code-pro]
+
+metadata:
+  hermes:
+    tags: [sales, closing, coaching, call-analysis, closing-code-ai]
+    related_skills: [hermes-sales-engine, methodology-alignment]
+    min_hermes_version: "0.13.0"
