@@ -54,7 +54,7 @@ tiers:
       - pre-call-brief
       - post-call-analysis
       - transcription-whisper
-      - score-0-100
+      - score-0-70
       - error-timestamps
       - improvement-suggestions
       - followup-brief-auto
@@ -77,7 +77,7 @@ tiers:
       - pre-call-brief
       - post-call-analysis
       - transcription-whisper
-      - score-0-100
+      - score-0-70
       - error-timestamps
       - improvement-suggestions
       - followup-brief-auto

@@ -37,7 +37,7 @@ Closing Code AI es la skill premium de ventas para Hermes Agent. Conecta tu agen
 ## No usar para:
 - Llamadas que no son de ventas (soporte técnico, RH, etc.)
 - Análisis sin audio/transcripción disponible
-- Coaching en idiomas no soportados (español e inglía1 soportados)
+- Coaching en idiomas no soportados (español e inglés soportados)
 
 ---
 
@@ -114,9 +114,13 @@ hermes closing-code-ai history
 closing-code-ai/
 ├── SKILL.md                          → Este archivo (interfaz pública)
 ├── skill.yaml                        → Manifest con tiers y pricing
+├── README.md                         → Instalación pública
+├── .gitignore                        → Excluye private/ y references/
 ├── references/
 │   ├── hermes-skill-standard.md      → Format requirements para Skills Hub
-│   └── methodology-sources.md        → Referencias a archivos fuente del backend
+│   ├── methodology-sources.md        → Referencias a archivos fuente del backend
+│   ├── whop-subscription-webhook.md  → Patrón de webhook para suscripciones
+│   └── brand-abstraction-pattern.md  → Cómo ocultar el nombre del backend
 ├── templates/
 │   ├── brief-pre-llamada.md          → Template brief pre-call
 │   └── reporte-post-llamada.md       → Template reporte post-call
@@ -194,6 +198,7 @@ La skill se activa automáticamente cuando el usuario dice:
 3. **Webhook no configurado**: El post-call automático no funciona. El usuario debe ejecutar análisis manualmente.
 4. **Tier incorrecto**: Si el usuario tiene Signal Lite gratis pero pide análisis post-llamada, sugerir upgrade a Closer Engine.
 5. **Prospect sin datos públicos**: El brief pre-llamada será genérico. Usar preguntas abiertas como fallback.
+6. **Exponer nombre del backend en la skill**: NUNCA usar el nombre real del backend (QuantumCore) en archivos públicos. Usar siempre la marca visible (Closing Code AI). Ver `references/brand-abstraction-pattern.md`.
 
 ---
 
