@@ -6,7 +6,7 @@ author: Closing Code AI
 license: proprietary
 copyright: "© 2026 The Closing Code AI. All rights reserved."
 redistribution: false
-terms_url: https://closingcodeai.com/terms
+terms_url: https://skill.closingcodeai.online/terms.html
 methodology: "Closing Cuántico™ QC_4.0"
 platforms: [linux, macos, windows]
 metadata:
@@ -16,20 +16,20 @@ metadata:
     post_install_message: |
       ✅ Closing Code AI skill installed.
       
-      Prueba ahora con una llamada real:
-      "Genera el QC 4.0 de esta llamada"
+      Try it now with a real call:
+      "Generate the QC 4.0 for this call"
       
-      Si no responde como skill:
-      1. Revisa que HERMES_CLOSING_CODE_API_KEY esté configurada
-      2. Confirma que estás en el perfil correcto
-      3. Prueba de nuevo con: "Analiza esta llamada de ventas"
+      If it doesn't respond:
+      1. Check that HERMES_CLOSING_CODE_API_KEY is configured
+      2. Confirm you're on the correct profile
+      3. Try again with: "Analyze this sales call"
 ---
 
 # Closing Code AI — Sales Engine Skill for Hermes Agent
 
 > ⚠️ **LEGAL WARNING:** This skill implements the proprietary Closing Cuántico™ QC_4.0 methodology.
 > Commercial use without an active license is prohibited. © 2026 The Closing Code AI. All rights reserved.
-> Terms: https://closingcodeai.com/terms
+> Terms: https://skill.closingcodeai.online/terms.html
 
 ## Overview
 
