@@ -41,6 +41,33 @@ Genera el QC 4.0 de esta llamada
 
 ---
 
+### Nota sobre el mensaje de seguridad de Hermes
+
+Cuando corras:
+
+```bash
+hermes skills install https://github.com/quantum-agent-MGM/closing-code-ai-skill
+```
+
+Hermes te va a mostrar un mensaje de seguridad como este:
+
+```
+⚠️  External skill detected: closing-code-ai
+    This skill will have access to your terminal, files, and network.
+
+    Security scan result: SAFE (no --force required)
+
+    Proceed with installation? [Y/n]:
+```
+
+Esto es normal para cualquier skill externo en Hermes.
+
+- El scan ya marcó este skill como **SAFE**.
+- Solo escribe `Y` o presiona **Enter** para continuar.
+- No necesitas usar `--force` ni ningún flag especial.
+
+---
+
 ## Cómo usar (5 triggers exactos)
 
 Di cualquiera de estas frases para activar el skill:
