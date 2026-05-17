@@ -1,7 +1,7 @@
 ---
 name: closing-code-ai
 description: "Use when analyzing sales calls, preparing closers pre-call, or generating post-call coaching reports. Integrates with Closing Code AI backend for AI-powered sales intelligence."
-version: 1.2.2
+version: 1.3.0
 author: Closing Code AI
 license: proprietary
 copyright: "© 2026 The Closing Code AI. All rights reserved."
@@ -13,6 +13,16 @@ metadata:
   hermes:
     tags: [sales, closing, coaching, call-analysis, closing-code-ai, whisper, post-call, pre-call]
     related_skills: [hermes-sales-engine, methodology-alignment]
+    post_install_message: |
+      ✅ Closing Code AI skill installed.
+      
+      Prueba ahora con una llamada real:
+      "Genera el QC 4.0 de esta llamada"
+      
+      Si no responde como skill:
+      1. Revisa que HERMES_CLOSING_CODE_API_KEY esté configurada
+      2. Confirma que estás en el perfil correcto
+      3. Prueba de nuevo con: "Analiza esta llamada de ventas"
 ---
 
 # Closing Code AI — Sales Engine Skill for Hermes Agent
@@ -29,16 +39,18 @@ Closing Code AI is the premium sales skill for Hermes Agent. Connects your Herme
 
 ## When to Use (Triggers)
 
-- "analyze this call" / "analiza esta llamada"
-- "review my call" / "revisa mi llamada"
-- "give me feedback on this recording" / "dame feedback de la call"
-- "prepare the closer" / "prepara al closer"
-- "generate pre-call brief" / "genera brief pre-llamada"
-- "brief for the closer" / "brief para el closer"
-- "generate post-call report" / "genera reporte post-llamada"
-- "score this recording" / "califica esta grabación"
-- "how did I close" / "qué tal cerré"
-- "what archetype is this prospect" / "qué arquetipo es este prospecto"
+Use any of these exact phrases to activate the skill:
+
+1. **"Analiza esta llamada de ventas"** / **"Analyze this sales call"**
+2. **"Genera el QC 4.0 de esta llamada"** / **"Generate the QC 4.0 for this call"**
+3. **"Dame el score de cierre de esta grabación"** / **"Give me the closing score of this recording"**
+4. **"Qué hizo mal el closer aquí"** / **"What did the closer do wrong here"**
+5. **"Haz coaching sobre esta llamada"** / **"Coach me on this call"**
+
+Also works with variations like:
+- "review my call", "feedback on the call"
+- "prepare the closer", "pre-call brief"
+- "what archetype is this prospect"
 - Post-call automatic via Closing Code AI webhook
 
 ## Do Not Use For:
@@ -100,18 +112,98 @@ Closer Engine × multiple closers + advanced intelligence.
 5. Skill generates structured report with `reporte-post-llamada.md` template
 6. Sends via Telegram/WhatsApp to closer + manager
 
-### Manual Command
+---
+
+## Installation
+
+Install the skill in the Hermes profile you use for sales:
 
 ```bash
-# Analyze call manually
-hermes closing-code-ai analyze <audio_url_or_file>
-
-# Generate pre-call brief
-hermes closing-code-ai brief <prospect_name> <company>
-
-# View history
-hermes closing-code-ai history
+hermes skills install https://github.com/quantum-agent-MGM/closing-code-ai-skill
 ```
+
+> **Profile recommendation:** Install in the profile you actually use for sales.
+> If you use multiple profiles, install the skill only where you need it and
+> configure the API key in that same profile to avoid confusion.
+
+## Configuration
+
+The skill requires `HERMES_CLOSING_CODE_AI_API_KEY` in the environment of the profile.
+
+### Step 1: Get your API key
+
+Activate your free tier at:
+**https://skill.closingcodeai.online**
+
+You will receive an API key after activation.
+
+### Step 2: Configure in Hermes
+
+Add the API key to your profile's environment:
+
+```bash
+# In your Hermes profile .env file:
+HERMES_CLOSING_CODE_API_KEY=ccai_tu_api_key_aqui
+```
+
+Or set it via Hermes CLI:
+```bash
+hermes config set HERMES_CLOSING_CODE_API_KEY ccai_tu_api_key_aqui
+```
+
+### Step 3: Verify
+
+Test with the smoke test below.
+
+---
+
+## ⚠️ Important
+
+**No `activate` command exists.**
+
+These commands do NOT exist and will fail:
+```bash
+hermes closing-code-ai activate --tier signal-lite      # ❌ Does not exist
+hermes closing-code-ai activate --tier closer-engine    # ❌ Does not exist
+hermes closing-code-ai analyze recording.mp3            # ❌ Does not exist
+hermes closing-code-ai brief "Name" "Company"           # ❌ Does not exist
+hermes closing-code-ai history                          # ❌ Does not exist
+```
+
+The skill becomes available automatically when:
+1. It is installed in the correct profile
+2. The API key is configured correctly
+3. You use one of the trigger phrases listed above
+
+---
+
+## Smoke Test (30 seconds)
+
+Run this test to confirm the skill is ready:
+
+1. **Install the skill:**
+   ```bash
+   hermes skills install https://github.com/quantum-agent-MGM/closing-code-ai-skill
+   ```
+
+2. **Configure your API key:**
+   ```bash
+   hermes config set HERMES_CLOSING_CODE_API_KEY ccai_tu_api_key_aqui
+   ```
+
+3. **Test with a trigger:**
+   In Hermes, type or say:
+   ```
+   Genera el QC 4.0 de esta llamada
+   ```
+
+**Expected result:**
+- Hermes enters the analysis flow
+- Recognizes you want to evaluate a real call
+- Asks for the audio file or processes it if already attached
+- Responds with analysis intent, not generic chat
+
+If this works, the skill is correctly configured.
 
 ---
 
@@ -139,7 +231,7 @@ closing-code-ai/
 > 🔒 **The Closing Cuántico™ QC_4.0 methodology is NOT in this repository.**
 > The public skill is only the interface. The complete methodology (dimensions A-G,
 > 12 Deadly Sins, 10 Closing Systems, 4 Archetypes, 5 Collapses) lives in the
-> private Closing Code AI backend and is accessed via API with CLOSING_CODE_AI_API_KEY.
+> private Closing Code AI backend and is accessed via API with HERMES_CLOSING_CODE_API_KEY.
 > Without a valid API key and active tier, the skill cannot generate analysis.
 
 ---
@@ -161,7 +253,7 @@ closing-code-ai/
 
 ### Authentication
 
-The skill requires `CLOSING_CODE_AI_API_KEY` in the environment. The user gets their API key from the Closing Code AI portal (`https://app.closingcodeai.online/settings`).
+The skill requires `HERMES_CLOSING_CODE_API_KEY` in the environment. The user gets their API key from the Closing Code AI portal (`https://skill.closingcodeai.online`).
 
 ### Webhook
 
@@ -170,7 +262,7 @@ Closing Code AI sends webhooks to the configured URL when an analysis finishes. 
 ```bash
 # Configure webhook in Closing Code AI
 curl -X POST https://api.closingcodeai.online/v1/webhooks \
-  -H "X-API-Key: $CLOSING_CODE_AI_API_KEY" \
+  -H "X-API-Key: $HERMES_CLOSING_CODE_API_KEY" \
   -d '{"url": "http://localhost:9876/webhook/closing-code-ai", "events": ["call.analysis.completed"]}'
 ```
 
@@ -186,34 +278,21 @@ curl -X POST https://api.closingcodeai.online/v1/webhooks \
 
 ---
 
-## Prompt Triggers (Auto-activation)
-
-The skill activates automatically when the user says:
-
-- "analyze this call", "review my call", "feedback on the call"
-- "prepare the closer", "brief for", "pre-call brief"
-- "generate report", "call score", "how did I close"
-- "what's my quantum score", "what sins did I commit"
-- "what archetype was this prospect", "how to handle objections"
-- "call diagnosis", "QC_4_0 report"
-- "how to improve my closing", "sales coaching"
-
----
-
 ## Common Pitfalls
 
-1. **No CLOSING_CODE_AI_API_KEY**: The skill fails silently. Always verify the key is configured.
+1. **No HERMES_CLOSING_CODE_API_KEY**: The skill fails silently. Always verify the key is configured.
 2. **Audio too long (>2h)**: Whisper may truncate. Recommend segmentation for calls >90 min.
 3. **Webhook not configured**: Automatic post-call doesn't work. User must run manual analysis.
 4. **Wrong tier**: If the user has free Signal Lite but asks for post-call analysis, suggest upgrade to Closer Engine.
 5. **Prospect with no public data**: The pre-call brief will be generic. Use open questions as fallback.
 6. **Exposing backend name in the skill**: NEVER use the real backend name (QuantumCore) in public files. Always use the visible brand (Closing Code AI). See `references/brand-abstraction-pattern.md`.
+7. **"unknown command" error**: There is no `activate` or `analyze` command. Use natural language triggers instead.
 
 ---
 
 ## Verification Checklist
 
-- [ ] CLOSING_CODE_AI_API_KEY configured
+- [ ] HERMES_CLOSING_CODE_API_KEY configured
 - [ ] CLOSING_CODE_AI_BASE_URL points to correct backend
 - [ ] Webhook configured in Closing Code AI portal
 - [ ] Telegram/WhatsApp gateway of Hermes active
@@ -221,42 +300,15 @@ The skill activates automatically when the user says:
 - [ ] Report generated with score 0-70 (dimensions A-G) + grade
 - [ ] Follow-up brief includes concrete next step + suggested closing system
 - [ ] Transcription not shared outside the user
+- [ ] Smoke test passed (see Smoke Test section above)
 
 ---
-
-## Installation
-
-```bash
-# Install via private tap (recommended method)
-hermes skills tap add quantum-agent-MGM/closing-code-ai-skill
-
-# Or install manually
-git clone https://github.com/quantum-agent-MGM/closing-code-ai-skill.git \
-  ~/.hermes/skills/devops/closing-code-ai
-```
-
-## Tier Activation
-
-```bash
-# Signal Lite (free) — pre-call brief
-hermes closing-code-ai activate --tier signal-lite
-
-# Closer Engine ($197/mo) — post-call analysis
-hermes closing-code-ai activate --tier closer-engine --key $CLOSING_CODE_AI_API_KEY
-
-# Closing Code Pro ($497/mo) — everything + multi-closer + ML
-hermes closing-code-ai activate --tier closing-code-pro --key $CLOSING_CODE_AI_API_KEY
-```
-
-> ⚡ **Full analysis requires Closer Engine ($197/mo)**
-> → Activate at: [whop.com/checkout/plan_rY3E9SKYb61XI](https://whop.com/checkout/plan_rY3E9SKYb61XI/)
-> → You will receive your API key via Telegram in less than 2 minutes.
 
 ## Distribution and Monetization
 
 ### Distribution Channels
 
-1. **Hermes Skills Hub** — `hermes skills tap add quantum-agent-MGM/closing-code-ai-skill`
+1. **Hermes Skills Hub** — `hermes skills install https://github.com/quantum-agent-MGM/closing-code-ai-skill`
 2. **ClawHub** (`clawhub.ai`)
 3. **aiskill.market**
 4. **r/hermesagent** — early adopters
@@ -265,7 +317,7 @@ hermes closing-code-ai activate --tier closing-code-pro --key $CLOSING_CODE_AI_A
 ### Monetization Loop
 
 ```
-Customer installs free tap → Uses Signal Lite for 2-3 weeks →
+Customer installs free skill → Uses Signal Lite for 2-3 weeks →
 Hermes suggests upgrade → Purchases $197/mo → Skill unlocks Closing Code AI →
 Hermes runs autonomous analysis → Closer receives report via WhatsApp
 ```
@@ -280,6 +332,7 @@ Hermes runs autonomous analysis → Closer receives report via WhatsApp
 
 ## Changelog
 
+- v1.3.0 (2026-05-17): Removed fake commands (activate, analyze, brief, history). Added smoke test. Fixed API key variable name to HERMES_CLOSING_CODE_API_KEY. Added post-install message. Simplified installation.
 - v1.2.2 (2026-05-14): Global repositioning — English + Spanish, languages field in skill.yaml, bilingual triggers
 - v1.2.1 (2026-05-14): telegram_id in customers table, notify_user_activation sends to client if telegram_id present
 - v1.2.0 (2026-05-14): SQLite + HMAC + Whop handler + bug fixes (score-0-70, typo, Mustache comment)
@@ -288,6 +341,6 @@ Hermes runs autonomous analysis → Closer receives report via WhatsApp
 
 ---
 
-*Closing Code AI — Sales Engine Skill v1.2.2*
+*Closing Code AI — Sales Engine Skill v1.3.0*
 *Powered by Closing Code AI backend + Hermes Agent*
 *https://closingcodeai.online*

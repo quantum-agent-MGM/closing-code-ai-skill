@@ -1,7 +1,7 @@
 name: closing-code-ai
 display_name: "Closing Code AI — Sales Engine"
 description: "AI-powered sales call analysis for high-ticket closers. Pre-call briefs + post-call scoring 0-70 with proprietary Closing Cuántico™ methodology. Native integration with Closing Code AI backend. Full English & Spanish support."
-version: 1.2.2
+version: 1.3.0
 author: "The Closing Code AI"
 license: proprietary
 copyright: "© 2026 The Closing Code AI. Todos los derechos reservados."
@@ -28,9 +28,20 @@ environment:
     - HERMES_GATEWAY_URL
     - TELEGRAM_BOT_TOKEN
   optional:
-    - CLOSING_CODE_AI_API_KEY
+    - HERMES_CLOSING_CODE_API_KEY
     - CLOSING_CODE_AI_BASE_URL
     - WHATSAPP_WEBHOOK_URL
+
+post_install_message: |
+  ✅ Closing Code AI skill installed.
+
+  Prueba ahora con una llamada real:
+  "Genera el QC 4.0 de esta llamada"
+
+  Si no responde como skill:
+  1. Revisa que HERMES_CLOSING_CODE_API_KEY esté configurada
+  2. Confirma que estás en el perfil correcto
+  3. Prueba de nuevo con: "Analiza esta llamada de ventas"
 
 tiers:
   signal-lite:
@@ -122,15 +133,17 @@ related_skills:
   - methodology-alignment
 
 entry_points:
-  cli:
-    - command: closing-code-ai
-      description: "Main command for Closing Code AI skill"
-      subcommands:
-        - analyze
-        - brief
-        - history
-        - activate
-        - config
+  natural_language:
+    - trigger: "Analiza esta llamada de ventas"
+      description: "Activate post-call analysis flow"
+    - trigger: "Genera el QC 4.0 de esta llamada"
+      description: "Generate full QC 4.0 report"
+    - trigger: "Dame el score de cierre de esta grabación"
+      description: "Get closing score for a recording"
+    - trigger: "Qué hizo mal el closer aquí"
+      description: "Get coaching on what went wrong"
+    - trigger: "Haz coaching sobre esta llamada de ventas"
+      description: "Receive coaching on the call"
   webhook:
     - path: /webhook/closing-code-ai
       method: POST
