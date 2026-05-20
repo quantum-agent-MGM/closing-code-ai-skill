@@ -1,7 +1,7 @@
 ---
 name: closing-code-ai
 description: "Use when analyzing sales calls, preparing closers pre-call, or generating post-call coaching reports. Integrates with Closing Code AI backend for AI-powered sales intelligence."
-version: 1.3.1
+version: 1.3.2
 author: Closing Code AI
 license: proprietary
 copyright: "© 2026 The Closing Code AI. All rights reserved."
@@ -119,7 +119,14 @@ Closer Engine × multiple closers + advanced intelligence.
 5. Skill fetches summary via `GET /v1/calls/{id}/analysis`
 6. Skill delivers report link + score summary via Telegram/WhatsApp to closer + manager
 
-> **Note on webhooks:** The Closing Code AI backend does not currently send outbound webhooks when analysis completes. The skill should poll `GET /v1/calls/{id}/analysis` for `analysis_status = "completed"`, or the user can request the report manually after a few minutes.
+> **Webhook outbound is NOW AVAILABLE** ✅ (deployed 2026-05-20)
+>
+> The Closing Code AI backend sends a webhook to your configured URL when analysis completes.
+> Payload: `{event: "call.analysis.completed", call_id, score, verdict, report_url, ...}`
+>
+> **To configure:** Set `webhook_url` on your client record via `PUT /v1/clients/{id}` or contact support.
+>
+> **Fallback:** If webhook is not configured, poll `GET /v1/calls/{id}/analysis` for `analysis_status = "completed"`.
 
 ---
 
@@ -267,16 +274,33 @@ The skill requires `HERMES_CLOSING_CODE_API_KEY` in the environment. The user ge
 
 ### Webhook
 
-> **Current limitation:** The Closing Code AI backend does not send outbound webhooks when analysis completes. This feature is planned for a future release.
+> **✅ Webhook outbound is NOW AVAILABLE** (deployed 2026-05-20)
 >
-> **Workaround — Polling:** The skill should poll `GET /v1/calls/{id}/analysis` every 30 seconds until `analysis_status = "completed"`. The response includes the HTML report URL.
+> Closing Code AI sends webhooks to the configured URL when an analysis finishes.
+> The skill exposes a local webhook server at `http://localhost:9876/webhook/closing-code-ai` (configurable).
 >
-> **Planned webhook (not yet available):**
-> ```bash
-> # Future configuration — not active today
-> curl -X POST https://api.closingcodeai.online/v1/webhooks \
->   -H "X-API-Key: $HERMES_CLOSING_CODE_API_KEY" \
->   -d '{"url": "http://localhost:9876/webhook/closing-code-ai", "events": ["call.analysis.completed"]}'
+> **Payload received:**
+> ```json
+> {
+>   "event": "call.analysis.completed",
+>   "call_id": "uuid",
+>   "client_id": "uuid",
+>   "status": "completed",
+>   "analysis": {
+>     "score": 52,
+>     "verdict": "Quedó en el aire",
+>     "grade": "C",
+>     "report_url": "https://skill.closingcodeai.online/reports/{call_id}.html",
+>     "language": "es",
+>     "dimensions": {"A": 8.5, "B": 7.2, "C": 6.0, "D": 9.1, "E": 5.5, "F": 7.8, "G": 4.0}
+>   }
+> }
+> ```
+>
+> **To configure:** Set `webhook_url` on your Closing Code AI client record.
+> Contact support or use `PUT /v1/clients/{id}` with `{webhook_url: "..."}`.
+>
+> **Fallback:** If no webhook_url is configured, poll `GET /v1/calls/{id}/analysis`.
 > ```
 
 ---
@@ -307,7 +331,7 @@ The skill requires `HERMES_CLOSING_CODE_API_KEY` in the environment. The user ge
 
 - [ ] HERMES_CLOSING_CODE_API_KEY configured
 - [ ] CLOSING_CODE_AI_BASE_URL points to correct backend
-- [ ] Webhook configured in Closing Code AI portal
+- [ ] Webhook configured in Closing Code AI portal (or polling fallback understood)
 - [ ] Telegram/WhatsApp gateway of Hermes active
 - [ ] User tier verified (Signal/Closer/Pro)
 - [ ] Report delivered as link to premium HTML report — raw LLM markdown rendered without filtering. Rich in content, not a summary.
@@ -346,7 +370,12 @@ Hermes runs autonomous analysis → Closer receives report via WhatsApp
 
 ## Changelog
 
-- v1.3.1 (2026-05-20): **Fase 1 — Reporte HTML + QC_4.1 alignment.** 
+- v1.3.2 (2026-05-20): **Webhook outbound AVAILABLE** ✅
+  - Backend now sends webhooks when analysis completes (`call.analysis.completed`)
+  - Payload: score, verdict, report_url, dimensions A-G
+  - Configure via `webhook_url` on client record
+  - Fallback polling still works if webhook not configured
+- v1.3.1 (2026-05-20): **Fase 1 — Reporte HTML + QC_4.1 alignment.**
   - Updated methodology: QC_4.0 → QC_4.1 (Dimension G = Ejecución de Cierre, no "No Cierre")
   - Documented that backend generates premium HTML 3-tier reports (Executive/Coach/Technical)
   - Removed claim that skill generates Markdown reports locally — backend renders HTML server-side
@@ -362,6 +391,6 @@ Hermes runs autonomous analysis → Closer receives report via WhatsApp
 
 ---
 
-*Closing Code AI — Sales Engine Skill v1.3.1*
+*Closing Code AI — Sales Engine Skill v1.3.2*
 *Powered by Closing Code AI backend + Hermes Agent*
 *https://closingcodeai.online*

@@ -1,7 +1,7 @@
 name: closing-code-ai
 display_name: "Closing Code AI — Sales Engine"
 description: "AI-powered sales call analysis for high-ticket closers. Pre-call briefs + post-call scoring 0-70 with proprietary Closing Cuántico™ methodology. Native integration with Closing Code AI backend. Full English & Spanish support."
-version: 1.3.1
+version: 1.3.2
 author: "The Closing Code AI"
 license: proprietary
 copyright: "© 2026 The Closing Code AI. Todos los derechos reservados."
@@ -149,7 +149,7 @@ entry_points:
   webhook:
     - path: /webhook/closing-code-ai
       method: POST
-      description: "Receive Closing Code AI call analysis completions — NOT YET AVAILABLE. Polling GET /v1/calls/{id}/analysis required until webhook outbound is implemented."
+      description: "Receive Closing Code AI call analysis completions. Payload: {event, call_id, client_id, analysis: {score, verdict, report_url, dimensions}}"
 
 dependencies:
   python_packages:
