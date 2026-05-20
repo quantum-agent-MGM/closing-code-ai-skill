@@ -63,7 +63,7 @@ tiers:
     price: 197
     price_currency: USD
     billing: monthly
-    description: "Full post-call analysis against Closing Cuántico™ QC_4_1 with premium HTML 3-tier reports"
+    description: "Full post-call analysis against Closing Cuántico™ QC_4_1. Premium HTML report rendered from raw LLM markdown — rich in content, not a summary. The client gets every insight the LLM generated."
     features:
       - buyer-profiling-basic
       - pre-call-brief
