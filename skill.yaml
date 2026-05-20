@@ -1,7 +1,7 @@
 name: closing-code-ai
 display_name: "Closing Code AI — Sales Engine"
 description: "AI-powered sales call analysis for high-ticket closers. Pre-call briefs + post-call scoring 0-70 with proprietary Closing Cuántico™ methodology. Native integration with Closing Code AI backend. Full English & Spanish support."
-version: 1.3.0
+version: 1.3.1
 author: "The Closing Code AI"
 license: proprietary
 copyright: "© 2026 The Closing Code AI. Todos los derechos reservados."
@@ -35,13 +35,13 @@ environment:
 post_install_message: |
   ✅ Closing Code AI skill installed.
 
-  Prueba ahora con una llamada real:
-  "Genera el QC 4.0 de esta llamada"
+  Try it now with a real call:
+  "Generate the QC 4.1 for this call"
 
-  Si no responde como skill:
-  1. Revisa que HERMES_CLOSING_CODE_API_KEY esté configurada
-  2. Confirma que estás en el perfil correcto
-  3. Prueba de nuevo con: "Analiza esta llamada de ventas"
+  If it doesn't respond:
+  1. Check that HERMES_CLOSING_CODE_API_KEY is configured
+  2. Confirm you're on the correct profile
+  3. Try again with: "Analyze this sales call"
 
 tiers:
   signal-lite:
@@ -63,7 +63,7 @@ tiers:
     price: 197
     price_currency: USD
     billing: monthly
-    description: "Análisis post-llamada completo contra Closing Cuántico™"
+    description: "Full post-call analysis against Closing Cuántico™ QC_4_1 with premium HTML 3-tier reports"
     features:
       - buyer-profiling-basic
       - pre-call-brief
@@ -74,6 +74,7 @@ tiers:
       - improvement-suggestions
       - followup-brief-auto
       - history-comparison
+      - html-3tier-report
       - telegram-delivery
       - whatsapp-delivery
     limits:
@@ -97,6 +98,7 @@ tiers:
       - improvement-suggestions
       - followup-brief-auto
       - history-comparison
+      - html-3tier-report
       - multi-closer-tracking
       - weekly-team-report
       - deal-prediction-ml
@@ -136,8 +138,8 @@ entry_points:
   natural_language:
     - trigger: "Analiza esta llamada de ventas"
       description: "Activate post-call analysis flow"
-    - trigger: "Genera el QC 4.0 de esta llamada"
-      description: "Generate full QC 4.0 report"
+    - trigger: "Genera el QC 4.1 de esta llamada"
+      description: "Generate full QC 4.1 report"
     - trigger: "Dame el score de cierre de esta grabación"
       description: "Get closing score for a recording"
     - trigger: "Qué hizo mal el closer aquí"
@@ -147,7 +149,7 @@ entry_points:
   webhook:
     - path: /webhook/closing-code-ai
       method: POST
-      description: "Receive Closing Code AI call analysis completions"
+      description: "Receive Closing Code AI call analysis completions — NOT YET AVAILABLE. Polling GET /v1/calls/{id}/analysis required until webhook outbound is implemented."
 
 dependencies:
   python_packages:
@@ -162,8 +164,8 @@ dependencies:
         - /v1/calls/{id}/analysis
         - /v1/methodology/closing-cuantico  → Privado, requiere API key
         - /v1/methodology/scoring-rubric    → Privado, requiere API key
-    - name: openai-whisper
-      description: "Whisper API o local faster-whisper"
+    - name: whisper-transcription
+      description: "Groq Whisper (primary) with chunked processing for calls >20 min. OpenAI fallback. Local whisper only for <15 min."
       required_for_tiers: [closer-engine, closing-code-pro]
 
 metadata:
