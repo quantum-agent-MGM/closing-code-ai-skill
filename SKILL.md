@@ -370,11 +370,14 @@ Hermes runs autonomous analysis → Closer receives report via WhatsApp
 
 ## Changelog
 
-- v1.3.2 (2026-05-20): **Webhook outbound AVAILABLE** ✅
+- v1.3.2 (2026-05-20): **Webhook outbound AVAILABLE + handler actualizado** ✅
   - Backend now sends webhooks when analysis completes (`call.analysis.completed`)
   - Payload: score, verdict, report_url, dimensions A-G
   - Configure via `webhook_url` on client record
+  - **webhook-handler.py v1.3.2** procesa payload real QC_4.1
+  - Notifica usuario con score + link al reporte HTML (no genera Markdown local)
   - Fallback polling still works if webhook not configured
+  - Whop webhook handling preserved
 - v1.3.1 (2026-05-20): **Fase 1 — Reporte HTML + QC_4.1 alignment.**
   - Updated methodology: QC_4.0 → QC_4.1 (Dimension G = Ejecución de Cierre, no "No Cierre")
   - Documented that backend generates premium HTML 3-tier reports (Executive/Coach/Technical)
